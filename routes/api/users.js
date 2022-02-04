@@ -17,10 +17,9 @@ router.post(
   [
     check('name', 'Name is required').not().isEmpty(),
     check('email', 'Please provide a valid email').isEmail(),
-    check(
-      'password',
-      'The password must be 6 characters long and must contain a number'
-    ).isLength({ min: 6 }),
+    check('password', 'The password must have 6 or more characters').isLength({
+      min: 6,
+    }),
   ],
   async (req, res) => {
     // req.body is the data that's going to be sent to this route.
@@ -80,10 +79,11 @@ router.post(
         { expiresIn: 360000 }, // «« option: highly recommended || will change to 3600 when it comes to production
         (err, token) => {
           if (err) throw err; // «« if error, throw error,
-          res.json({ name, email, token }); // «« if not, send token to client 🤩
+          res.json({ token }); // «« if not, send token to client 🤩
         }
       );
     } catch (err) {
+      console.error(err.message);
       res.status(500).send('Server error');
     }
   }

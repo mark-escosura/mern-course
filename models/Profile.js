@@ -1,3 +1,14 @@
+/**
+ * Create a profile model
+ * 1. const mongoose = require('mongoose');
+ *
+ * 2. const ProfileSchema = new mongoose.Schema({
+ *  user: { we wanna make a reference to the user model because every profile should be associated with the user
+ *    type: mongoose.Schema.Types.ObjectId «« this is a special field type === ObjectId
+ * }
+ * })
+ */
+
 const mongoose = require('mongoose');
 
 const ProfileSchema = new mongoose.Schema({
@@ -15,18 +26,20 @@ const ProfileSchema = new mongoose.Schema({
     type: String,
   },
   status: {
-    // «« For Example: Developer, Full Stack, Front End, Back End, etc.
+    // For Example: Developer, Senior Developer, Junior, etc. // dropdown
     type: String,
     required: true,
   },
   skills: {
-    type: [String], // «« an array of strings
-    required: true,
+    type: [String], // «« an array of strings thats why there are brackets around this
+    required: true, // «« this is also required because it has to show on the profile
+    // the way they enter skills in the UI in react, is a comma separated value list
   },
   bio: {
     type: String,
   },
   githubusername: {
+    // gonna be working with GitHub api
     type: String,
   },
   experience: [
@@ -50,8 +63,8 @@ const ProfileSchema = new mongoose.Schema({
         type: Date,
       },
       current: {
-        type: Boolean,
-        default: false,
+        type: Boolean, // «« this is going to be a checkbox for those who currently work there
+        default: false, // «« set default to false \\ unchecked
       },
       description: {
         type: String,
@@ -112,3 +125,8 @@ const ProfileSchema = new mongoose.Schema({
 });
 
 module.exports = Profile = mongoose.model('profile', ProfileSchema);
+
+/**
+ * We should be able to bring this profile in to our profile routes
+ * We should be able to query the database, and perform CRUD operations.
+ */
