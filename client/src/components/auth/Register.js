@@ -114,3 +114,4 @@ const Register = (props) => {
 };
 
 export default connect(null, { setAlert })(Register);
+// connect takes in two things ( mapStateToProps, mapDispatchToProps)
