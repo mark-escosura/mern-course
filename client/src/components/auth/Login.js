@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
@@ -21,7 +21,7 @@ const Login = () => {
     console.log('Success!');
   };
   return (
-    <div>
+    <Fragment>
       <section className='container'>
         <div className='alert alert-danger'>Invalid credentials</div>
         <h1 className='large text-primary'>Sign In</h1>
@@ -54,7 +54,7 @@ const Login = () => {
           Don't have an account? <Link to='/register'>Sign Up</Link>
         </p>
       </section>
-    </div>
+    </Fragment>
   );
 };
 
