@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { setAlert } from '../../redux/actions/alertAction';
 import { register } from '../../redux/actions/authAction';
 import PropTypes from 'prop-types'; // impt proptypes
+import Alert from '../layout/Alert';
 
-const Register = ({ setAlert, register }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -33,15 +34,12 @@ const Register = ({ setAlert, register }) => {
   return (
     <Fragment>
       <section className='container'>
+        <Alert />
         <h1 className='large text-primary'>Sign Up</h1>
         <p className='lead'>
           <i className='fas fa-user'></i> Create Your Account
         </p>
-        <form
-          className='form'
-          action='create-profile.html'
-          onSubmit={handleSubmit}
-        >
+        <form className='form' onSubmit={handleSubmit}>
           <div className='form-group'>
             <input
               type='text'
@@ -99,7 +97,12 @@ const Register = ({ setAlert, register }) => {
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { setAlert, register })(Register);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);
 // connect takes in two things ( mapStateToProps, mapDispatchToProps)
