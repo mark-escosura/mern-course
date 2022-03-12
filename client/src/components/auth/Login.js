@@ -1,7 +1,11 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Alert from '../layout/Alert';
+import PropTypes from 'prop-types';
+import { login } from '../../redux/actions/authAction';
+import { connect } from 'react-redux';
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -9,26 +13,34 @@ const Login = () => {
 
   const { email, password } = formData;
 
+  let navigate = useNavigate();
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Success!');
+    login(email, password);
   };
+
+  if (isAuthenticated) {
+    navigate('/dashboard');
+  }
+
   return (
     <Fragment>
       <section className='container'>
-        <div className='alert alert-danger'>Invalid credentials</div>
+        <Alert />
         <h1 className='large text-primary'>Sign In</h1>
         <p className='lead'>
           <i className='fas fa-user'></i> Sign into Your Account
         </p>
-        <form className='form' action='dashboard.html' onSubmit={handleSubmit}>
+        <form className='form' onSubmit={handleSubmit}>
           <div className='form-group'>
             <input
               type='email'
@@ -58,7 +70,16 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);
 
 /**
  *

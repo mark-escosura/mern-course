@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setAlert } from '../../redux/actions/alertAction';
 import { register } from '../../redux/actions/authAction';
 import PropTypes from 'prop-types'; // impt proptypes
@@ -15,6 +15,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   });
 
   const { name, email, password, password2 } = formData;
+
+  let navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -31,6 +34,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     }
   };
 
+  if (isAuthenticated) {
+    navigate('/dashboard');
+  }
+
   return (
     <Fragment>
       <section className='container'>
@@ -45,7 +52,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               type='text'
               placeholder='Name'
               name='name'
-              // required
               value={name}
               onChange={(e) => handleChange(e)}
             />
@@ -55,7 +61,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               type='email'
               placeholder='Email Address'
               name='email'
-              // required=''
               value={email}
               onChange={(e) => handleChange(e)}
             />
@@ -69,7 +74,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               type='password'
               placeholder='Password'
               name='password'
-              // minlength='6'
               value={password}
               onChange={(e) => handleChange(e)}
             />
@@ -101,7 +105,7 @@ Register.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.isAuthenticated,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { setAlert, register })(Register);
