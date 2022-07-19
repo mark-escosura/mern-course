@@ -29,7 +29,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    console.log(req.body); // data object
+    // console.log(req.body); // data object
 
     const { name, email, password } = req.body;
 

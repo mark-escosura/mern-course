@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from './components/routing/PrivateRoute';
 //styles
@@ -28,17 +28,18 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <Fragment>
-        <Navbar />
+      <>
         <Routes>
-          <Route exact path='/' element={<Landing />} />
-          <Route path='register' element={<Register />} />
-          <Route path='login' element={<Login />} />
-          <Route element={<PrivateRoute />}>
-            <Route path='dashboard' element={<Dashboard />} />
+          <Route exact path='/' element={<Navbar />}>
+            <Route index path='/' element={<Landing />} />
+            <Route path='register' element={<Register />} />
+            <Route path='login' element={<Login />} />
+            <Route element={<PrivateRoute />}>
+              <Route path='dashboard' element={<Dashboard />} />
+            </Route>
           </Route>
         </Routes>
-      </Fragment>
+      </>
     </Provider>
   );
 };

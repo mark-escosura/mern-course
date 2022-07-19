@@ -1,5 +1,5 @@
 {
-    "mongoURI": "mongodb+srv://markintech:markintech@mern.xjaqw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongoURI": "mongodb+srv://markintech:markintech@mern.xjaqw.mongodb.net/?retryWrites=true&w=majority",
     "jwtSecret" : "secrettoken",
     "githubClientId" : "225c8d33bd052c9648ea",
     "githubSecret" : "744e4015ca8f5616eb7e6c542f0f130ea0c8d195"
