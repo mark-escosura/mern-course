@@ -5,6 +5,9 @@ import {
   PROFILE_ERROR,
   UPDATE_PROFILE,
   ACCOUNT_DELETED,
+  CLEAR_PROFILE,
+  GET_PROFILES,
+  GET_REPOS,
 } from './types';
 
 // Get current users profile
@@ -14,6 +17,23 @@ export const getCurrentProfile = () => async (dispatch) => {
 
     dispatch({
       type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get Github Repos
+
+export const getGithubRepos = (username) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/github/${username}`);
+    dispatch({
+      type: GET_REPOS,
       payload: res.data,
     });
   } catch (err) {
@@ -171,7 +191,8 @@ export const deleteEducation = (id) => async (dispatch) => {
 };
 
 // Delete Account & Profile
-export const deleteAccount = (id) => async (dispatch) => {
+
+export const deleteAccount = () => async (dispatch) => {
   if (window.confirm('Are you sure? This can NOT be undone!')) {
     try {
       const res = await axios.delete('/api/profile');
@@ -181,12 +202,53 @@ export const deleteAccount = (id) => async (dispatch) => {
         payload: res.data,
       });
 
-      dispatch(setAlert('Your account has been permanently deleted'));
+      dispatch(
+        setAlert('Your account has been permanently deleted', 'success')
+      );
     } catch (err) {
       dispatch({
         type: PROFILE_ERROR,
         payload: { msg: err.response.statusText, status: err.responses.status },
       });
     }
+  }
+};
+
+// Get all profiles
+export const getProfiles = () => async (dispatch) => {
+  // to prevent flashing of the past user lets run clear profile here
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get('/api/profile');
+
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get Profile by ID
+
+export const getProfileById = (userId) => async (dispatch) => {
+  // to prevent flashing of the past user lets run clear profile here
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get(`/api/profile/user/${userId}`);
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
   }
 };
