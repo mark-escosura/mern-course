@@ -8,6 +8,8 @@ import { getCurrentProfile } from '../../redux/actions/profileAction';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
 import Alert from '../layout/Alert';
+import Experience from './Experience';
+import Education from './Education';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -28,7 +30,16 @@ const Dashboard = ({
         <i className='fas fa-user'> Welcome {user && user.name}</i>
       </p>
       {profile !== null ? (
-        <DashboardActions />
+        <>
+          <DashboardActions />
+          {profile.experience.length !== 0 && (
+            <Experience experience={profile.experience} />
+          )}
+
+          {profile.education.length !== 0 && (
+            <Education education={profile.education} />
+          )}
+        </>
       ) : (
         <>
           <p>You have not yet set up a profile, please add some info</p>
