@@ -7,6 +7,7 @@ import { getCurrentProfile } from '../../redux/actions/profileAction';
 // components
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
+import Alert from '../layout/Alert';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -21,6 +22,7 @@ const Dashboard = ({
     <Spinner />
   ) : (
     <div className='container'>
+      <Alert />
       <h1 className='large text-primary'>Dashboard</h1>
       <p className='lead'>
         <i className='fas fa-user'> Welcome {user && user.name}</i>

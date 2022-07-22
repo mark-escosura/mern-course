@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+// actions
 import { createProfile } from '../../redux/actions/profileAction';
+// components
 import withRouter from '../hooks/withRouter';
-import Alert from '../layout/Alert';
 
-const CreateProfile = ({ createProfile, navigate }) => {
+const CreateProfile = ({ createProfile, router: { navigate } }) => {
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -47,7 +49,6 @@ const CreateProfile = ({ createProfile, navigate }) => {
   };
   return (
     <div className='container'>
-      <Alert />
       <h1 className='large text-primary'>Create Your Profile</h1>
       <p className='lead'>
         <i className='fas fa-user'></i> Let's get some information to make your
@@ -216,9 +217,9 @@ const CreateProfile = ({ createProfile, navigate }) => {
         )}
 
         <input type='submit' className='btn btn-primary my-1' />
-        <a className='btn btn-light my-1' href='dashboard.html'>
+        <Link className='btn btn-light my-1' to='/dashboard'>
           Go Back
-        </a>
+        </Link>
       </form>
     </div>
   );
