@@ -49,7 +49,7 @@ const EditProfile = ({
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });
-  }, [loading]); //eslint-disable-line
+  }, [loading, getCurrentProfile]); //eslint-disable-line
 
   const {
     company,
