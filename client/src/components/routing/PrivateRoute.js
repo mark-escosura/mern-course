@@ -3,7 +3,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const PrivateRoute = ({ isAuthenticated, loading }) => {
+const PrivateRoute = ({ auth: { isAuthenticated, loading } }) => {
   return isAuthenticated && !loading ? <Outlet /> : <Navigate to='login' />;
 };
 
@@ -12,8 +12,7 @@ PrivateRoute.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  loading: state.auth.loading,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps)(PrivateRoute);
